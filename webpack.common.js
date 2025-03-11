@@ -21,6 +21,11 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
+      // HTML SECTION
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+      },
       // IMAGES SECTION
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
