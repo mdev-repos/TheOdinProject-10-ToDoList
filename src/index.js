@@ -4,6 +4,8 @@ import { Project, ProjectService, ProjectState } from './models/project';
 import { dateFormatter, dateComparer, changeDue, getRemainingDays } from './utils/date-utils'
 import loadHome from './views/home-view';
 import loadApp from './views/app-view';
+import loadProject from './views/project-view';
+
 
 function clearContent(){
   const mainContainer = document.querySelector('.main-content');
@@ -21,16 +23,21 @@ const exampleProject2 = ProjectService.createProject('Another Project', 'This is
 const exampleTask3 = TaskService.createTask('Another Task', 'This is an example task', dateFormatter(2025, 2, 19, 19, 30), Priority.LOW, exampleProject2.projectID);
 ProjectService.addTask(exampleProject2.projectID, exampleTask3.taskID);
 
-console.log(ProjectService.getAllProjects());
-console.log(ProjectService.getProjectByID(exampleProject.projectID));
-console.log(TaskService.getAllTasks(exampleProject.projectID));
-console.log(TaskService.getTaskByID(exampleTask.taskID));
+
 
 clearContent();
 loadHome();
 
 const ctaHomeBtn = document.querySelector('#home-cta');
-  ctaHomeBtn.addEventListener ('click', () => {
-    clearContent();
-    loadApp();
-  });
+ctaHomeBtn.addEventListener ('click', () => {
+  clearContent();
+  loadApp();
+
+  const projectsOpeners = document.querySelectorAll('.project-open-btn');
+    projectsOpeners.forEach(btn => {
+    btn.addEventListener ('click', (e) => {
+        e.preventDefault();
+        clearContent();
+        loadProject();
+    })});
+});

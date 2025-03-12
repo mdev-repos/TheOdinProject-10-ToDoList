@@ -12,6 +12,15 @@
     --primary-color: #6fffe9;
     --secondary-color: #5bc0be;
     --third-color: #3a506b;
+
+    --create-color: #2ba320;
+    --create-hov-color: #56f547;
+
+    --edit-color: #2555be;
+    --edit-hov-color: #4177ec;
+
+    --delete-color: #c50b0b;
+    --delete-hov-color: #f02f2f;
 }
 
 body{
@@ -101,6 +110,106 @@ main{
     box-shadow: 2px 2px 2px var(--third-color);
 }
 
+  /* APP STYLES */
+.app-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10%;
+    gap: 7px;
+}
+
+.projects-adm{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.projects-adm p{
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.projects-adm span, .proj-card-header span{
+    width: 25%;
+    color: var(--bg-color);
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: transform 0.2s;
+    text-align: center;
+}
+
+.projects-adm span{
+    background-color: var(--create-color);
+}
+
+.proj-card-header span{
+    background-color: var(--edit-color);
+}
+
+.projects-adm span:hover, .proj-card-header span:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.projects-adm span:hover{
+    background-color: var(--create-hov-color);
+}
+
+.proj-card-header span:hover{
+    background-color: var(--edit-hov-color);
+}
+
+.projects-container{
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ color: var(--secondary-color);
+}
+
+.project-card {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 15px;
+    border: 1px solid var(--third-color);
+    border-radius: 10px;
+}
+
+.proj-card-header{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.proj-card-title{
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.proj-card-descript{
+    width: 100%;
+    height: 80%;
+    font-size: 0.9rem;
+    font-weight: 200;
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
 /* FOOTER STYLES */
 footer{
     display: flex;
@@ -123,5 +232,29 @@ footer{
     .home-image{
         width: 50%;
         height: auto;
+    }
+
+    .projects-adm span{
+        max-width: 100px;
+    }
+
+    .projects-container{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--secondary-color);
+    }
+
+    .project-card {
+        width: 48%;
+        min-width: 300px;
+        height: 270px;
+    }
+
+    .proj-card-header span{
+        min-width: 100px;
     }
 }
