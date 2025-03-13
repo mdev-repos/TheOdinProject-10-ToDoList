@@ -36,10 +36,13 @@ export class ProjectService {
   }
 
   // Update
-  static addTask (projectID, taskID) {
+  static addTask(projectID, taskID) {
     const project = ProjectsData.find(project => project.projectID === projectID) || null;
-    project.taskList.push(taskID);
-    return project.taskList;
+    if (project) {
+      project.taskList.push(taskID);
+      return project.taskList;
+    }
+    return null;
   }
 
   static updateProject(projID, updatedProject) {
@@ -47,6 +50,18 @@ export class ProjectService {
     if (index !== -1) {
       ProjectsData[index] = updatedProject;
       return updatedProject;
+    }
+    return null;
+  }
+
+  static removeTaskFromProject(projectID, taskID) {
+    const project = this.getProjectByID(projectID);
+    if (project) {
+      const taskIndex = project.taskList.indexOf(taskID);
+      if (taskIndex !== -1) {
+        project.taskList.splice(taskIndex, 1);
+        return project;
+      }
     }
     return null;
   }

@@ -1,7 +1,7 @@
 import { format, parseISO, isBefore, addDays, differenceInDays } from 'date-fns';
 
-export function dateFormatter (year, month, day, hour, min) {
-  const dueDate = format(new Date(year, month, day, hour, min), 'MM/dd/yyyy HH:mm');
+export function dateFormatter (year, month, day) {
+  const dueDate = format(new Date(year, month, day), 'MM/dd/yyyy');
   return dueDate;
 };
 
@@ -17,7 +17,8 @@ export function changeDue (oldDueDate, daysToAdd) {
 };
 
 export function getRemainingDays (dueDate) {
-  const now = Date.now();
-  const days = differenceInDays(dueDate, now);
+  const today = new Date();
+  const formattedToday = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+  const days = differenceInDays(dueDate, formattedToday);
   return days;
 }

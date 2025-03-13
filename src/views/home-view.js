@@ -2,6 +2,11 @@ import firstScheduleImg from '../assets/home-schedule-img.png'
 import secondScheduleImg from '../assets/home-schedule2-img.png'
 
 export default function loadHome () {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+});
+
   const mainContainer = document.querySelector('.main-content');
   const homeContainer = document.createElement('div');
   homeContainer.classList.add('home-container');
@@ -35,4 +40,4 @@ export default function loadHome () {
   ctaHomeBtn.textContent = 'Try for free';
   homeContainer.appendChild(ctaHomeBtn);
   mainContainer.appendChild(homeContainer);
-}
+};
