@@ -23,6 +23,7 @@ export class ProjectService {
   static createProject(title, description) {
     const project = new Project(title, description);
     ProjectsData.push(project);
+    console.log('Project created successfully');
     return project;
   }
 

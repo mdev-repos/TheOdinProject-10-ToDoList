@@ -1,6 +1,7 @@
 import { Project, ProjectService, ProjectState } from '../models/project';
 import loadProject from './project-view.js';
 import clearContent from '../index.js'
+import loadNewProjectForm from './new-project-view.js';
 
 function createProjectCard (project) {
     const projectCard = document.createElement('div');
@@ -72,7 +73,7 @@ export default function loadApp () {
     const newProject = document.querySelector('#add-new-project');
     newProject.addEventListener('click', () => {
         clearContent();
-        
+        loadNewProjectForm();
     });
 
     const projectsOpeners = document.querySelectorAll('.project-open-btn');

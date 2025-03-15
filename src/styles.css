@@ -424,6 +424,96 @@ main{
     background-color: var(--create-hov-color);
 }
 
+/* NEW PROJECT FORM STYLES */
+.new-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-section label{
+    color: var(--secondary-color);
+}
+
+.form-section input[type=text], .form-section textarea{
+    border: 1px solid var(--third-color);
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1.1rem;
+    background-color: transparent;
+    color: var(--secondary-color);
+}
+
+.form-section input[type=text]{
+    height: 40px;
+}
+
+.form-section textarea{
+    min-height: 100px;
+}
+
+input:invalid, textarea:invalid{
+    outline: none;
+    box-shadow: 2px 2px 3px var(--delete-hov-color);
+}
+
+input:valid, textarea:valid{
+    outline: none;
+    box-shadow: 2px 2px 3px var(--create-hov-color);
+}
+
+input:focus, textarea:focus{
+    outline: none;
+    box-shadow: 2px 2px 3px var(--secondary-color);
+}
+
+.btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#form-btn{
+    background-color: var(--create-color);
+    color: white;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+#form-btn:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 1px 1px 1px var(--third-color);
+}
+
+
+.error-text{
+    color: var(--delete-color);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.success{
+    font-size: 1.3rem;
+    color: var(--create-hov-color);
+}
+
+.hidden{
+    visibility: hidden;
+}
+
 /* FOOTER STYLES */
 footer{
     display: flex;
