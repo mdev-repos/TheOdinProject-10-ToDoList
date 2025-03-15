@@ -432,7 +432,7 @@ main{
     gap: 15px;
 }
 
-.form-section{
+.form-section, .form-section-little{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -513,6 +513,21 @@ input:focus, textarea:focus{
 .hidden{
     visibility: hidden;
 }
+
+/* NEW TASK FORM STYLES */
+.little-section-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.form-section-little{
+    width: 50%;
+}
+
+
 
 /* FOOTER STYLES */
 footer{
