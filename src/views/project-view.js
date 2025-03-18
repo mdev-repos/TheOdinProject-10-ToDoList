@@ -8,6 +8,8 @@ import loadEditTaskForm from './edit-task-view.js'
 
 function createTaskCard (taskID) {
     const task = TaskService.getTaskByID(taskID);
+    const taskDueDate = task.dueDate;
+    const remainingDays = getRemainingDays(taskDueDate);
 
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
@@ -27,6 +29,11 @@ function createTaskCard (taskID) {
       titleSpan.classList.add('state-done');
     }
     titleSpan.textContent = `${task.state}`;
+
+    if(remainingDays < 0 && task.state === TaskState.TODO){
+      titleSpan.textContent = 'Past date';
+    }
+    
     titleContainer.appendChild(titleSpan);
 
     taskCard.appendChild(titleContainer);
@@ -52,11 +59,13 @@ function createTaskCard (taskID) {
     const remianingTime = document.createElement('p');
     remianingTime.classList.add('state-value');
     
-    const taskDueDate = task.dueDate;
-    const remainingDays = getRemainingDays(taskDueDate);
+    
     
     if (remainingDays === 0){
       remianingTime.textContent = 'Today!';
+    } else if(remainingDays < 0){
+      remianingTime.textContent = 'Past date!';
+
     } else {
         remianingTime.textContent = `in ${remainingDays} days`;
     }
@@ -67,6 +76,14 @@ function createTaskCard (taskID) {
         remianingTime.classList.add('mid-prior');
     } else {
         remianingTime.classList.add('high-prior');
+    }
+
+    if(task.state === TaskState.DONE){
+      remianingTime.textContent = 'Done';
+      remianingTime.classList.remove('low-prior');
+      remianingTime.classList.remove('mid-prior');
+      remianingTime.classList.remove('high-prior');
+      remianingTime.classList.add('low-prior');
     }
 
     cardStateTime.appendChild(remianingTime);

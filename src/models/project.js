@@ -1,4 +1,4 @@
-import { ProjectsData } from "./data";
+import { ProjectsData, saveData } from "./data";
 
 // Enum
 export const ProjectState = {
@@ -24,6 +24,7 @@ export class ProjectService {
     const project = new Project(title, description);
     ProjectsData.push(project);
     console.log('Project created successfully');
+    saveData();
     return project;
   }
 
@@ -41,6 +42,7 @@ export class ProjectService {
     const project = ProjectsData.find(project => project.projectID === projectID) || null;
     if (project) {
       project.taskList.push(taskID);
+      saveData();
       return project.taskList;
     }
     return null;
@@ -50,6 +52,7 @@ export class ProjectService {
     const index = ProjectsData.findIndex(project => project.projectID === projID);
     if (index !== -1) {
       ProjectsData[index] = updatedProject;
+      saveData();
       return updatedProject;
     }
     return null;
@@ -61,6 +64,7 @@ export class ProjectService {
       const taskIndex = project.taskList.indexOf(taskID);
       if (taskIndex !== -1) {
         project.taskList.splice(taskIndex, 1);
+        saveData();
         return project;
       }
     }
@@ -72,6 +76,7 @@ export class ProjectService {
     const index = ProjectsData.findIndex(project => project.projectID === projectID);
     if (index !== -1) {
       ProjectsData.splice(index, 1);
+      saveData();
       return ProjectsData;
     }
     return null;

@@ -5,9 +5,10 @@ This project required building a to-do application, a classic in any student's r
 The main idea was to use everything learned so far, adding the use of libraries through nmp (date-fns in this case) and the Web Storage API (localStorage) to somehow persist user data. 
 One of the goals between projects was the creation of a template (github repository) to more quickly manage webpack configurations; this project was created in that way.
 
-Still in progress | I hope you like my work :)
+I hope you like my work :)
 
-Tools: HTML / CSS / JS
-Key concepts: OOP | Web Storage API | external libraries | webpack repo template
+Tools: HTML / CSS / JS.
 
-Developed by mdev in 2025
+Key concepts: OOP | Web Storage API | external libraries | webpack repo template.
+
+Developed by mdev in 2025.

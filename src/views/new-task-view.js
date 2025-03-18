@@ -1,6 +1,9 @@
 import clearContent from '../index.js'
 import loadProject from './project-view.js';
+import { TaskService } from '../models/task.js';
+import { dateFormatter, dateComparer } from '../utils/date-utils.js';
 import { ProjectService } from '../models/project.js';
+
 
 export default function loadNewTaskForm (projectID) {
     window.scrollTo({
@@ -21,9 +24,6 @@ export default function loadNewTaskForm (projectID) {
 
   newTaskContainer.appendChild(goBackTo);
 
-
-
-  // FORM
   const newTaskForm = document.createElement('form');
   newTaskForm.classList.add('new-form');
 
@@ -83,7 +83,6 @@ export default function loadNewTaskForm (projectID) {
   dueDateSeter.name = "due-date";
   dueDateSeter.id = 'task-due'
   dueDateSeter.required = true;
-  dueDateSeter.min = new Date();
   dueDateSection.appendChild(dueDateSeter);
 
   littleSection.appendChild(dueDateSection);
@@ -97,14 +96,34 @@ export default function loadNewTaskForm (projectID) {
   prioritySection.appendChild(priorityLabel);
 
   const prioritySelect = document.createElement('select');
+  prioritySelect.id = 'task-priority';
+  prioritySelect.name = 'priority'
 
+  const nonOption = document.createElement('option');
+  nonOption.textContent = 'Choose Task priority';
+  nonOption.value = '';
+  prioritySelect.appendChild(nonOption);
+
+  const lowOption = document.createElement('option');
+  lowOption.textContent = 'Low';
+  lowOption.value = 'Low';
+  prioritySelect.appendChild(lowOption);
+
+  const midOption = document.createElement('option');
+  midOption.textContent = 'Medium';
+  midOption.value = 'Medium';
+  prioritySelect.appendChild(midOption);
+
+  const highOption = document.createElement('option');
+  highOption.textContent = 'High';
+  highOption.value = 'High';
+  prioritySelect.appendChild(highOption);
 
   prioritySection.appendChild(prioritySelect);
   littleSection.appendChild(prioritySection);
 
   newTaskForm.appendChild(littleSection);
 
-  // FORM BTN
   const btnContainer = document.createElement('div');
   btnContainer.classList.add('btn-container');
 
@@ -117,14 +136,119 @@ export default function loadNewTaskForm (projectID) {
 
   newTaskContainer.appendChild(newTaskForm);
 
+  const titleError = document.createElement('p')
+  titleError.id = 'title-error';
+  titleError.classList.add('error-text');
+  titleError.classList.add('hidden')
+  titleError.textContent = '* The title is mandatory and must have a minimum of 4 characters and a maximum of 16.';
+  newTaskContainer.appendChild(titleError);
 
+  const descError = document.createElement('p')
+  descError.id = 'desc-error';
+  descError.classList.add('error-text');
+  descError.classList.add('hidden')
+  descError.textContent = '* The description is mandatory and must have a minimum of 10 characters and a maximum of 40.';
+  newTaskContainer.appendChild(descError);
 
-   // APPENDING
-   mainContainer.appendChild(newTaskContainer);
+  const dateError = document.createElement('p')
+  dateError.id = 'date-error';
+  dateError.classList.add('error-text');
+  dateError.classList.add('hidden')
+  dateError.textContent = '* The due date is mandatory and cannot be passed.';
+  newTaskContainer.appendChild(dateError);
+
+  const priorityError = document.createElement('p');
+  priorityError.id = 'priority-error';
+  priorityError.classList.add('error-text');
+  priorityError.classList.add('hidden')
+  priorityError.textContent = '* The priority is mandatory. Choose one option.';
+  newTaskContainer.appendChild(priorityError);
+
+  const taskSucces = document.createElement('p');
+  taskSucces.id = 'created';
+  taskSucces.classList.add('success');
+  taskSucces.classList.add('hidden');
+  taskSucces.textContent = 'Task create successfully!';
+  newTaskContainer.appendChild(taskSucces);
+
+  mainContainer.appendChild(newTaskContainer);
 
    // EVENT LISTENERS
-   goBackTo.addEventListener('click', () => {
+    goBackTo.addEventListener('click', () => {
      clearContent();
      loadProject (projectID);
-   });
+    });
+
+    titleInput.addEventListener('input', () => {
+      if(!titleInput.checkValidity()){
+        titleError.classList.remove('hidden');
+      } else { titleError.classList.add('hidden'); }
+    });
+
+    descriptionArea.addEventListener('input', () => {
+      if(!descriptionArea.checkValidity()){
+        descError.classList.remove('hidden');
+      } else { descError.classList.add('hidden') }
+    });
+
+    dueDateSeter.addEventListener('input', () => {
+      const inputDATE = dueDateSeter.value;
+      const inputDate = new Date(inputDATE);
+      const now = new Date();
+  
+      if (dateComparer(inputDate, now)) {
+          dateError.classList.remove('hidden');
+          dueDateSeter.classList.add('invalid-date');
+          dueDateSeter.classList.remove('valid-date');
+      } else {
+          dateError.classList.add('hidden');
+          dueDateSeter.classList.remove('invalid-date');
+          dueDateSeter.classList.add('valid-date');
+      }
+  });
+
+    prioritySelect.addEventListener('change', () => {
+      if (prioritySelect.value === '') {
+          priorityError.classList.remove('hidden');
+          prioritySelect.classList.add('invalid-priority');
+      } else {
+          priorityError.classList.add('hidden');
+          prioritySelect.classList.remove('invalid-priority');
+      }
+    });
+
+    formBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const inputDATE = dueDateSeter.value;
+      const inputDate = new Date(inputDATE);
+      const now = new Date();
+      if (!titleInput.checkValidity() || 
+          !descriptionArea.checkValidity() || 
+          !dueDateSeter.checkValidity() || 
+          dateComparer(inputDate, now) ||
+          prioritySelect.value === '') {
+          return;
+      } else {
+          const newTask = TaskService.createTask(
+              titleInput.value, 
+              descriptionArea.value, 
+              dateFormatter(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate()),
+              prioritySelect.value,
+              projectID
+          );
+
+          ProjectService.addTask(projectID, newTask.taskID);
+
+          titleInput.value = '';
+          descriptionArea.value = '';
+          dueDateSeter.value = '';
+          prioritySelect.value = '';
+          taskSucces.classList.remove('hidden');
+  
+          setTimeout(() => {
+              clearContent();
+              loadProject(projectID);
+          }, 3000); 
+      }
+  });
 };

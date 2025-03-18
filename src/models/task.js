@@ -1,4 +1,4 @@
-import { TasksData } from "./data";
+import { TasksData, saveData } from "./data";
 
 // Enums
 export const Priority = {
@@ -37,6 +37,7 @@ export class TaskService {
     }
     const task = new Task(title, description, dueDate, priority, projectID);
     TasksData.push(task);
+    saveData();
     return task;
   }
 
@@ -54,6 +55,7 @@ export class TaskService {
     const index = TasksData.findIndex(task => task.taskID === taskID);
     if (index !== -1) {
       TasksData[index] = { ...TasksData[index], ...updatedFields };
+      saveData();
       return TasksData[index];
     }
     return null;
@@ -64,6 +66,7 @@ export class TaskService {
     const index = TasksData.findIndex(task => task.taskID === taskID);
     if (index !== -1) {
       TasksData.splice(index, 1);
+      saveData();
       return TasksData;
     }
     return null;

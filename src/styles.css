@@ -460,12 +460,18 @@ main{
     min-height: 100px;
 }
 
-input:invalid, textarea:invalid{
+input[type="date"]:valid,
+input[type="date"]:invalid {
+    border-color: initial;
+    box-shadow: none;
+}
+
+input:invalid, textarea:invalid, .invalid-date, .invalid-priority {
     outline: none;
     box-shadow: 2px 2px 3px var(--delete-hov-color);
 }
 
-input:valid, textarea:valid{
+input:valid, textarea:valid, .valid-date{
     outline: none;
     box-shadow: 2px 2px 3px var(--create-hov-color);
 }
@@ -501,7 +507,7 @@ input:focus, textarea:focus{
 
 .error-text{
     color: var(--delete-color);
-    font-size: 0.9rem;
+    font-size: 0.7em;
     text-align: center;
 }
 
@@ -583,5 +589,9 @@ footer{
 
     .task-card {
         min-height: 300px;
+    }
+
+    .error-text{
+        font-size: 0.9rem;
     }
 }
